@@ -1,7 +1,13 @@
-import app from '@/app';
-import { Request, Response } from 'express';
+import UserModel from '@/models/user.model';
+import express, { Request, Response } from 'express';
+
+const HealthRouter = express.Router();
 
 
-app.get('/healthcheck', (req: Request, res: Response) => {
+
+HealthRouter.get('/healthcheck', async (req: Request, res: Response) => {
+  await UserModel.create({a: 'a'})
   res.status(200).send('ok');
 })
+
+export default HealthRouter;

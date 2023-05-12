@@ -17,7 +17,7 @@ export abstract class MongoBaseRepository<T> {
     return await this._mongoDocument.create(item);
   }
 
-  update(id: string, item) {
+  update(id: string, item: any) {
     return this._mongoDocument.findByIdAndUpdate(id, item);
   }
 }
