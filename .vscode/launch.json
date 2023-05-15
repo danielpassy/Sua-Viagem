@@ -9,6 +9,6 @@
       "name": "Run npm dev",
       "request": "launch",
       "type": "node-terminal"
-  }  
+    }
   ]
 }
