@@ -1,27 +1,26 @@
-import logger from 'pino'
+import logger from 'pino';
 
-const message = `, time: ${new Date().toISOString()}`
+const message = `, time: ${new Date().toISOString()}`;
 
 const pinoProvider = logger({
   timestamp: () => message
-  }
-)
+});
 
 const logService = (provider: any) => {
   return {
     info: (message: string) => {
-      provider.info(message)
+      provider.info(message);
     },
     error: (message: string) => {
-      provider.error(message)
+      provider.error(message);
     },
     debug: (message: string) => {
-      provider.debug(message)
+      provider.debug(message);
     },
     warn: (message: string) => {
-      provider.warn(message)
+      provider.warn(message);
     }
-  }
-} 
+  };
+};
 
-export default logService(pinoProvider)
+export default logService(pinoProvider);

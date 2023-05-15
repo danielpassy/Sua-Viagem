@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 import config from '../../config';
 import logger from '../logger';
 
- const ConnectService = async (provider: any) => {
+const ConnectService = async (provider: any) => {
   const dbUri: string = config.dbUri;
   try {
     await provider.connect(dbUri);
@@ -10,11 +10,11 @@ import logger from '../logger';
   } catch (error) {
     logger.error(`DB connection failed, ${error}`);
     process.exit(1);
-  } 
-}
+  }
+};
 
-const disconnect = async () => {}
+const disconnect = async () => {};
 
-const connectMongo = () => ConnectService(mongoose)
+const connectMongo = () => ConnectService(mongoose);
 
-export default {connect: connectMongo, disconnect}
+export default { connect: connectMongo, disconnect };

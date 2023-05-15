@@ -4,7 +4,7 @@ export abstract class MongoBaseRepository<T> {
   _mongoDocument: Model<Document & any>;
 
   constructor() {}
-  
+
   async getAll() {
     return await this._mongoDocument.find().exec();
   }

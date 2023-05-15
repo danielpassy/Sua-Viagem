@@ -4,8 +4,7 @@ export const mockAuthService = {
       name: userName,
       email: email,
       password: password
-    }
-  },
-
-}
+    };
+  }
+};
 export default mockAuthService;
