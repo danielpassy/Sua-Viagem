@@ -5,7 +5,7 @@ const HealthRouter = express.Router();
 
 HealthRouter.get('/healthcheck', async (req: Request, res: Response) => {
   await UserModel.create({
-    password: '12',
+    password: '1asdasdas2',
     email: '123',
     name: '123'
   });

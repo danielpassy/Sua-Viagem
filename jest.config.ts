@@ -2,8 +2,14 @@ import type { Config } from 'jest';
 
 const config: Config = {
   preset: '@shelf/jest-mongodb',
-  testEnvironment: 'node',
+  // testEnvironment: 'node',
   transform: {
-    '^.+\\.tsx?$': ['ts-jest', {}],
+    '^.+\\.tsx?$': ['ts-jest', {}]
   },
+  moduleNameMapper: {
+    '^@/(.*)$': '<rootDir>/src/$1'
+  },
+  watchPathIgnorePatterns: ['globalConfig']
 };
+
+export default config;

@@ -5,7 +5,7 @@ export class AuthService {
   repository: UserRepository;
 
   public constructor(_repository: any) {
-    const repository = new _repository();
+    this.repository = new _repository();
   }
 
   register(registerDTO: RegisterDTO) {
