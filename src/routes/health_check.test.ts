@@ -1,12 +1,14 @@
 import UserModel from '@/models/user.model';
 import request from 'supertest';
-import { MongoClient } from 'mongodb';
-let connection: any;
-let db: any;
+import app from '@/app';
+import dbService from '@/libs/db';
 
 beforeAll(async () => {
-  connection = await MongoClient.connect(globalThis.__MONGO_URI__, {});
-  db = await connection.db(globalThis.__MONGO_DB_NAME__);
+  await dbService.connect(globalThis.__MONGO_URI__);
+});
+
+afterEach(async () => {
+  await dbService.disconnect;
 });
 
 it('it should create and retrieve a user', async () => {

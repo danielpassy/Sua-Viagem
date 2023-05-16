@@ -1,3 +1,5 @@
+// TS complains about globalThis in testing. This is a workaround.
+
 /* eslint-disable no-var */
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface globalThis {}

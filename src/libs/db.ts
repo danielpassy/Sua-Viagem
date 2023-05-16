@@ -1,9 +1,7 @@
 import mongoose from 'mongoose';
-import config from '../../config';
-import logger from '../logger';
+import logger from './logger';
 
-const ConnectService = async (provider: any) => {
-  const dbUri: string = config.dbUri;
+const ConnectService = async (provider: any, dbUri: string) => {
   try {
     await provider.connect(dbUri);
     logger.info('DB connection success');
@@ -13,8 +11,8 @@ const ConnectService = async (provider: any) => {
   }
 };
 
-const disconnect = async () => {};
+const disconnect = async () => await mongoose.connection.close();
 
-const connectMongo = () => ConnectService(mongoose);
+const connectMongo = (dbUri: string) => ConnectService(mongoose, dbUri);
 
 export default { connect: connectMongo, disconnect };
