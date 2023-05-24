@@ -1,4 +1,4 @@
-import { RegisterDTO } from '@/controllers/auth/auth.dto';
+import { RegisterDTO } from '@/auth/controllers/auth/auth.dto';
 import AuthService from './auth.service';
 import { UserRepository } from '@/models';
 
@@ -14,7 +14,7 @@ it('should insert a new user into the database', async () => {
     email: 'email',
     name: 'hi'
   });
-  const service = new AuthService(FakeUserRepository);
+  const service = new AuthService(new FakeUserRepository());
 
   const user = await service.register(dto);
 

@@ -3,6 +3,7 @@ import { Model, Query, Document } from 'mongoose';
 export abstract class MongoBaseRepository<T> {
   _mongoDocument: Model<Document & any>;
 
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
   constructor() {}
 
   async getAll() {
