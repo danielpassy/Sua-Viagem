@@ -14,4 +14,10 @@ export interface global {}
 declare global {
   var __MONGO_URI__: string;
   var __MONGO_DB_NAME__: string;
+  namespace NodeJS {
+    interface ProcessEnv {
+      ENVIRONMENT: 'test' | 'development' | ' production';
+      PORT?: string;
+    }
+  }
 }
