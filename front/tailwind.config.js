@@ -5,6 +5,10 @@ module.exports = {
     './components/**/*.{js,ts,jsx,tsx,mdx}',
     './app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
+  // Prevents tailwind from purging the styles from the MUI components
+  corePlugins: {
+    preflight: false,
+  },
   theme: {
     extend: {
       backgroundImage: {

@@ -1,5 +1,9 @@
 import './globals.css'
 import { Inter } from 'next/font/google'
+import '@fontsource/roboto/300.css';
+import '@fontsource/roboto/400.css';
+import '@fontsource/roboto/500.css';
+import '@fontsource/roboto/700.css';
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -13,9 +17,10 @@ export default function RootLayout({
 }: {
   children: React.ReactNode
 }) {
+  const className = `flex justify-center ${inter.className}`
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={className}>{children}</body>
     </html>
   )
 }
