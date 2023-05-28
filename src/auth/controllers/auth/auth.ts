@@ -13,5 +13,7 @@ export const register = (req: Request<object, object, RegisterDTO>, res: Respons
 };
 
 export const login = (req: Request<object, {}, LoginDTO>, res: Response) => {
-  jwt.sign(payload, secretOrPrivateKey, { expiresIn: '1h' });
+  // jwt.sign(payload, secretOrPrivateKey, { expiresIn: '1h' });
+  console.log('tried to login')
+  return res.status(200)
 };
