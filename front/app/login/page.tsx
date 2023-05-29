@@ -228,7 +228,7 @@ function RegisterForm() {
           ),
         }}
       />
-      <Button onClick={submit} disabled={canSubmit} className="my-2" variant="outlined">
+      <Button onClick={submit} disabled={!canSubmit} className="my-2" variant="outlined">
         Register
       </Button>
     </>

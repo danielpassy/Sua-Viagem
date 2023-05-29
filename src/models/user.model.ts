@@ -2,12 +2,12 @@ import { Schema, model, Document, HydratedDocument } from 'mongoose';
 export interface IUser {
   name?: string;
   email: string;
-  password?: string;
+  password: string;
 }
 
 const userSchema = new Schema<IUser>(
   {
-    name: { type: String, required: true },
+    name: { type: String },
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true, minlength: 6 }
   },

@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import { LoginDTO, RegisterDTO } from './auth.dto';
 import authService from '@/auth/services/auth';
 import { UserDocument } from '@/models';
+import config from '@/config';
 
 export const register = async (req: Request<object, object, RegisterDTO>, res: Response) => {
   try {
@@ -22,6 +23,9 @@ const serializeUser = (user: UserDocument) => {
 }
 
 export const login = async (req: Request<object, {}, LoginDTO>, res: Response) => {
-  const login = await authService.login(req.body);
-  return res.status(200).json({ message: 'asd' });
+  const token = await authService.login(req.body);
+  return res.cookie('token', token, {
+    httpOnly: true,
+    maxAge: config.JWT_TTL
+  }).send('sent');
 };
