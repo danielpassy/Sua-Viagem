@@ -1,22 +1,22 @@
-import UserModel from '@/models/user.model';
+// import UserModel from '@/models/user.model';
 import request from 'supertest';
+// import app from '@/app';
+import db from '@/libs/db';
 import app from '@/app';
-import dbService from '@/libs/db';
+
 
 beforeAll(async () => {
-  await dbService.connect(globalThis.__MONGO_URI__);
+  await db.connect(`${globalThis.__MONGO_URI__}${globalThis.__MONGO_DB_NAME__}`);
 });
 
-afterEach(async () => {
-  await dbService.disconnect;
+afterAll(async () => {
+  await db.disconnect()
 });
+
 
 it('it should create and retrieve a user', async () => {
-  const response = await request(app).get('/healthcheck');
+  const response = await request(app).get('/api/healthcheck');
   expect(response.status).toBe(200);
   expect(response.text).toBe('ok');
 
-  const users = await UserModel.find();
-  expect(users.length).toBe(1);
-  expect(users[0].email).toBe('123');
 });

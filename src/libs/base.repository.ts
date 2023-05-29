@@ -1,24 +1,28 @@
-import { Model, Query, Document } from 'mongoose';
+import { Model, Document } from 'mongoose';
 
-export abstract class MongoBaseRepository<T> {
-  _mongoDocument: Model<Document & any>;
+export abstract class MongoBaseRepository<T extends Document, V> {
+  _mongoModel: Model<T>;
 
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
-  constructor() {}
+  // DOcument -> 1 thing
+  // Model -> ORM
 
-  async getAll() {
-    return await this._mongoDocument.find().exec();
+  async getAll(): Promise<T[]> {
+    return await this._mongoModel.find().exec();
   }
 
-  async get(id: any) {
-    return await this._mongoDocument.findById(id).exec();
+  async get(id: any): Promise<T | null> {
+    return await this._mongoModel.findById(id).exec();
   }
 
-  async create(item: T) {
-    return await this._mongoDocument.create(item);
+  async getByField(field: any, value: any): Promise<T | null> {
+    return await this._mongoModel.findOne({ [field]: value }).exec();
   }
 
-  update(id: string, item: any) {
-    return this._mongoDocument.findByIdAndUpdate(id, item);
+  async create(item: V): Promise<T> {
+    return await this._mongoModel.create(item);
+  }
+
+  update(id: string, item: any): Promise<T | null> {
+    return this._mongoModel.findByIdAndUpdate(id, item);
   }
 }

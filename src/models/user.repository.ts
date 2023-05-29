@@ -1,7 +1,10 @@
 import { MongoBaseRepository } from '@/libs/base.repository';
-import { IUser } from './user.model';
-import { Model } from 'mongoose';
+import UserModel, { IUser, UserDocument } from './user.model';
 
-export class UserRepository extends MongoBaseRepository<IUser> {
-  _mongoDocument: Model<any & Document>;
+export class UserRepository extends MongoBaseRepository<UserDocument, IUser> {
+  constructor() {
+    super();
+    this._mongoModel = UserModel
+  }
+
 }

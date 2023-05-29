@@ -1,15 +1,12 @@
 import { LoginDTO, RegisterDTO } from '@/auth/controllers/auth/auth.dto';
 import { AuthServiceInterface } from '@/auth/services/auth/auth.service.interface';
-import { IUser, UserRepository } from '@/models';
+import { EncryptService } from '@/libs/encryption';
+import { IUser, UserDocument, UserRepository } from '@/models';
 
 export class AuthService implements AuthServiceInterface {
-  repository: UserRepository;
+  public constructor(private _repository: UserRepository) { }
 
-  public constructor(_repository: UserRepository) {
-    this.repository = _repository;
-  }
-
-  async login(loginDTO: LoginDTO): Promise<IUser> {
+  async login(loginDTO: LoginDTO): Promise<UserDocument> {
     throw new Error('Method not implemented.');
   }
 
@@ -17,9 +14,18 @@ export class AuthService implements AuthServiceInterface {
     throw new Error('Method not implemented.');
   }
 
-  async register(registerDTO: RegisterDTO): Promise<IUser> {
-    const user = this.repository.create(registerDTO);
-    return user;
+  async register(registerDTO: RegisterDTO): Promise<UserDocument> {
+    const user = await this._repository.getByField('email', registerDTO.email);
+    if (user) {
+      throw Error('User already exists');
+    }
+
+    const encryptedPassword = await EncryptService.hashPassword(registerDTO.password);
+    const registeredUser = await this._repository.create({
+      ...registerDTO,
+      password: encryptedPassword,
+    });
+    return registeredUser;
   }
 }
 

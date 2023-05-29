@@ -1,22 +1,42 @@
-import UserModel from '@/models/user.model';
 import request from 'supertest';
 import app from '@/app';
-import dbService from '@/libs/db';
+import UserModel from '@/models/user.model';
+import db from '@/libs/db';
+import { LoginDTO, RegisterDTO } from '@/auth/controllers/auth/auth.dto';
+
 
 beforeAll(async () => {
-  await dbService.connect(globalThis.__MONGO_URI__);
+  await db.connect(`${globalThis.__MONGO_URI__}${globalThis.__MONGO_DB_NAME__}`);
 });
 
-afterEach(async () => {
-  await dbService.disconnect;
+afterAll(async () => {
+  await db.disconnect()
 });
 
 it('it should create and retrieve a user', async () => {
-  const response = await request(app).get('/signup');
-  expect(response.status).toBe(200);
-  expect(response.text).toBe('ok');
+  const registerData = new RegisterDTO({
+    name: 'ASDOKJSADKASDK',
+    email: 'ASDOKJSADKASDK',
+    password: 'ASDOKJSADKASDK',
+  })
+  const response = await request(app).post('/api/auth/register',).send(registerData);
+  expect(response.status).toBe(201);
 
-  const users = await UserModel.find();
+  const users = await UserModel.find().exec();
   expect(users.length).toBe(1);
-  expect(users[0].email).toBe('123');
+  expect(users[0].email).toBe(registerData.email);
 });
+
+it('it should login', async () => {
+  const loginData = new LoginDTO({
+    email: 'ASDOKJSADKASDK',
+    password: 'ASDOKJSADKASDK',
+  })
+  const response = await request(app).post('/api/auth/login',).send(loginData);
+  expect(response.status).toBe(201);
+
+  const users = await UserModel.find().exec();
+  expect(users.length).toBe(1);
+  expect(users[0].email).toBe(loginData.email);
+});
+

@@ -1,17 +1,20 @@
 import mongoose from 'mongoose';
-import logger from './logger';
+// import logger from './logger';
 
 const ConnectService = async (provider: any, dbUri: string) => {
   try {
-    await provider.connect(dbUri);
-    logger.info('DB connection success');
+    await mongoose.connect(dbUri);
+    // logger.info('DB connection success');
   } catch (error) {
-    logger.error(`DB connection failed, ${error}`);
+    // logger.error(`DB connection failed, ${error}`);
     process.exit(1);
   }
 };
 
-const disconnect = async () => await mongoose.connection.close();
+const disconnect = async () => {
+  await mongoose.disconnect();
+}
+
 
 const connectMongo = (dbUri: string) => ConnectService(mongoose, dbUri);
 
