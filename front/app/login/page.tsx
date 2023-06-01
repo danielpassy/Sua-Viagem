@@ -16,6 +16,9 @@ import {
 } from '@mui/material';
 import React, { useState } from 'react';
 import api from '@api';
+import useAuthContext from '@/app/context/auth-context';
+import { useRouter } from 'next/navigation';
+import useSnackbarContext from '@/app/context/snack-context';
 
 function SelectableTitle({
   title,
@@ -126,9 +129,18 @@ function LoginForm() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
+  const authContext = useAuthContext();
+  const snackbar = useSnackbarContext();
+  const router = useRouter();
 
   const submit = async () => {
-    await api.auth.login(email, password);
+    try {
+      const user = await api.auth.login(email, password);
+      authContext.setUser(user);
+      router.push('/');
+    } catch (err: any) {
+      snackbar.displayMsg(err.response.data.message);
+    }
   };
   return (
     <>
@@ -176,6 +188,8 @@ function RegisterForm() {
 
   const submit = async () => {
     await api.auth.register(email, password);
+    const router = useRouter();
+    router.push('/login');
   };
 
   return (

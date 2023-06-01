@@ -1,11 +1,12 @@
 import dotenv from 'dotenv';
 // Dotenv needs to set env variable before module initialization
 dotenv.config();
-import express from 'express';
+import express, { NextFunction } from 'express';
 import bodyParser from 'body-parser';
 import AuthRouter from './auth/routes/auth';
 import HealthRouter from '@/health_check/routes/healthcheck';
 import cors from 'cors';
+import ErrorHandlerMiddleware from '@/middlewares/error-handler.middleware';
 
 const app = express();
 
@@ -19,6 +20,7 @@ const corsOptions = {
 
 
 
+
 app.use(cors(corsOptions));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -26,4 +28,5 @@ app.use('/api/auth/', AuthRouter);
 app.use('/api/', HealthRouter);
 // app.use(passport.initialize());
 // app.use(passport.session());
+app.use(ErrorHandlerMiddleware);
 export default app;

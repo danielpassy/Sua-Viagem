@@ -3,10 +3,20 @@ import app from '@/app';
 import UserModel from '@/models/user.model';
 import db from '@/libs/db';
 import { LoginDTO, RegisterDTO } from '@/auth/controllers/auth/auth.dto';
+import authService from '@/auth/services/auth';
+import mongoose from 'mongoose';
 
 
 beforeAll(async () => {
   await db.connect(`${globalThis.__MONGO_URI__}${globalThis.__MONGO_DB_NAME__}`);
+});
+
+beforeEach(async () => {
+  const collections = await mongoose.connection.db.collections()
+  let collection
+  for (collection of collections) {
+    await collection.drop()
+  }
 });
 
 afterAll(async () => {
@@ -15,7 +25,6 @@ afterAll(async () => {
 
 it('it should create and retrieve a user', async () => {
   const registerData = new RegisterDTO({
-    name: 'ASDOKJSADKASDK',
     email: 'ASDOKJSADKASDK',
     password: 'ASDOKJSADKASDK',
   })
@@ -27,16 +36,16 @@ it('it should create and retrieve a user', async () => {
   expect(users[0].email).toBe(registerData.email);
 });
 
-it('it should login', async () => {
-  const loginData = new LoginDTO({
+it('it should return token if correct login ', async () => {
+  const registerData = new RegisterDTO({
     email: 'ASDOKJSADKASDK',
     password: 'ASDOKJSADKASDK',
   })
-  const response = await request(app).post('/api/auth/login',).send(loginData);
-  expect(response.status).toBe(201);
+  await authService.register(registerData)
 
-  const users = await UserModel.find().exec();
-  expect(users.length).toBe(1);
-  expect(users[0].email).toBe(loginData.email);
+  const loginData = new LoginDTO({ ...registerData })
+  const response = await request(app).post('/api/auth/login',).send(loginData);
+  expect(response.status).toBe(200);
+  expect(response.headers['set-cookie']).toBeDefined();
 });
 

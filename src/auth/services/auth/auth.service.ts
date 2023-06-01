@@ -15,7 +15,7 @@ export class AuthService implements AuthServiceInterface {
       throw Error('User not found');
     }
 
-    const isCorrectPassword = EncryptService.verifyPassword(loginDTO.password, user.password);
+    const isCorrectPassword = await EncryptService.verifyPassword(loginDTO.password, user.password);
     if (!isCorrectPassword) {
       throw Error('Incorrect password');
     }

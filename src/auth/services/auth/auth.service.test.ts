@@ -6,13 +6,16 @@ class FakeUserRepository extends UserRepository {
   create(item: any) {
     return item;
   }
+  async getByField(field: any, value: any) {
+    return await null
+  }
+
 }
 
 it('should insert a new user into the database', async () => {
   const dto = new RegisterDTO({
     password: 'password',
     email: 'email',
-    name: 'hi'
   });
   const service = new AuthService(new FakeUserRepository());
 

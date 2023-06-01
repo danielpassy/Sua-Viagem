@@ -8,7 +8,9 @@ const config: Config = {
   moduleNameMapper: {
     '^@/(.*)$': '<rootDir>/src/$1'
   },
-  watchPathIgnorePatterns: ['globalConfig']
+  watchPathIgnorePatterns: ['globalConfig'],
+  // Prevent Jest from resetting modules used for mocking between each test
+  maxWorkers: 1
 };
 
 export default config;
