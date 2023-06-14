@@ -161,6 +161,11 @@ function LoginForm() {
           label="Password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter') {
+              submit();
+            }
+          }}
           endAdornment={
             <InputAdornment position="end">
               <IconButton onClick={() => setShowPassword(!showPassword)}>
@@ -184,7 +189,12 @@ function RegisterForm() {
   const [showPassword, setShowPassword] = useState(false);
 
   const passwordsMatch = password === repeatPassword;
-  const canSubmit = !!(email.length > 5 && password && repeatPassword && passwordsMatch);
+  const canSubmit = !!(
+    email.length > 5 &&
+    password &&
+    repeatPassword &&
+    passwordsMatch
+  );
 
   const submit = async () => {
     await api.auth.register(email, password);
@@ -242,7 +252,12 @@ function RegisterForm() {
           ),
         }}
       />
-      <Button onClick={submit} disabled={!canSubmit} className="my-2" variant="outlined">
+      <Button
+        onClick={submit}
+        disabled={!canSubmit}
+        className="my-2"
+        variant="outlined"
+      >
         Register
       </Button>
     </>
