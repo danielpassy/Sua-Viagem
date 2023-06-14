@@ -138,17 +138,18 @@ function TripForm() {
 //    descrição: link imporntate 1
 //    descrição: link imporntate 2
 //
-// Seção 1 - Estadia -
-//  descrição: o que eu quero.
-//  todo: alugar
 //
-// seção 2 - Flight/bus.
+// seção 1 - Como ir.
 //   descrição: Transporte de x até y.
 //   todo: comprar.
 //   tempo: dia x
 //   onde: lugar y
 //
-// seção 3 - Visto.
+// Seção 2 - Estadia -
+//  descrição: o que eu quero.
+//  todo: alugar
+//
+//  seção 3 - Visto.
 //    descrição: verificar e tirar o visto.
 //    todo: verificar se o visto precisa.
 //    todo2: tirar o visto.
@@ -157,3 +158,16 @@ function TripForm() {
 //    descrição: comer parada
 //    tempo: ??
 //    onde: tal lugar
+//
+// seção 5 - Dinheiro
+//    descrição: Western Union/Wise/dinheiro vivo.
+//    tempo: ??
+//    onde: tal lugar
+
+// Esses planejamentos serão agrupados conforme "local", da pra chamar de "Cidade"
+//  dificilmente alguém fica em várias localiadde na mesma cidade.
+
+// Tem essa visualização de viagem, que nela vão ter as etapas.
+// As permissões, quem pode ver e editar contigo
+// Visualização de TODO
+// Visualização de itinerário.
