@@ -1,0 +1,22 @@
+{
+  "root": true,
+  "env": {
+    "node": true
+  },
+  "parser": "@typescript-eslint/parser",
+  "plugins": ["@typescript-eslint", "prettier"],
+  "ignorePatterns": ["node_modules", "dist"],
+  "extends": [
+    // "next/core-web-vitals",
+    "eslint:recommended",
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended"
+  ],
+  "rules": {
+    "max-lines": ["error", { "max": 500 }],
+    "max-len": ["error", { "code": 100 }],
+    "semi": 0,
+    "@typescript-eslint/no-explicit-any": ["off"],
+    "@typescript-eslint/ban-types": ["off"]
+  }
+}
