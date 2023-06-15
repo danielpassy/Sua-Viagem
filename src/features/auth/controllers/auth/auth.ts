@@ -25,7 +25,6 @@ const serializeUser = (user: UserDocument) => {
 
 export const login = async (req: Request<object, {}, LoginDTO>, res: Response, next: any) => {
   try {
-    console.log('asdsad')
     const token = await authService.login(req.body);
     // send the user also.
     return res.cookie('token', token, {
@@ -33,7 +32,6 @@ export const login = async (req: Request<object, {}, LoginDTO>, res: Response, n
       maxAge: config.JWT_TTL
     }).send('sent');
   } catch (error: any) {
-    console.log('asdsad')
     ThrowError(next, error.message, 403);
   }
 };
