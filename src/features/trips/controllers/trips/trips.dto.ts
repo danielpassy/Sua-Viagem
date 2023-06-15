@@ -5,7 +5,10 @@ export enum Layouts {
   International = 'international'
 }
 export class CreateTripDto {
+  public constructor(init: Partial<CreateTripDto>) {
+    Object.assign(this, init);
+  }
   initialDate: null | Dayjs;
-  destination: '';
+  destination: string;
   layout: Layouts;
 }

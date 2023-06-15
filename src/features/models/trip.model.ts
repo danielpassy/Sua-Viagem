@@ -5,6 +5,7 @@ import mongoose, { Schema, model, HydratedDocument } from 'mongoose';
 type Trip = Object;
 
 export interface ITrip {
+  name: String;
   destination: String;
   initialDate: Dayjs;
   data: Trip;
@@ -14,6 +15,7 @@ export interface ITrip {
 
 const TripsSchema = new Schema<ITrip>(
   {
+    name: { type: String },
     destination: { type: String },
     initialDate: { type: Dayjs },
     data: { type: Object },

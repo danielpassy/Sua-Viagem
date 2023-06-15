@@ -15,7 +15,16 @@ type Trip = object;
 
 export const updateTrip = async (req: Request<{}, {}, Trip>, res: Response) => {
   try {
-    const updatedTrip = await tripService.updateTrip(req.body);
+    const updatedTrip = await tripService.updateTrip(req.body, req.query.tripId);
+    return res.status(200).json(updatedTrip);
+  } catch (error: any) {
+    return res.status(401).json({ message: error.message });
+  }
+};
+
+export const deleteTrip = async (req: Request<{}, {}, Trip>, res: Response) => {
+  try {
+    const updatedTrip = await tripService.updateTrip(req.query.tripId);
     return res.status(200).json(updatedTrip);
   } catch (error: any) {
     return res.status(401).json({ message: error.message });
