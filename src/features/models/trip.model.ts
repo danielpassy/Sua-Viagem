@@ -17,7 +17,7 @@ const TripsSchema = new Schema<ITrip>(
   {
     name: { type: String },
     destination: { type: String },
-    initialDate: { type: Dayjs },
+    initialDate: { type: Date },
     data: { type: Object },
     editors: [
       {
@@ -34,6 +34,6 @@ const TripsSchema = new Schema<ITrip>(
 );
 
 export type TripDocument = HydratedDocument<ITrip>;
-const TripModel = model<TripDocument>('User', TripsSchema);
+const TripModel = model<TripDocument>('Trip', TripsSchema);
 
 export default TripModel;

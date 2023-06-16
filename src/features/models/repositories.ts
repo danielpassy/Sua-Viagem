@@ -1,6 +1,6 @@
 import { MongoBaseRepository } from '@/libs/base.repository';
 import UserModel, { IUser, UserDocument } from './user.model';
-import TripModel, { ITrip, TripDocument } from '@/models/trip.model';
+import TripModel, { ITrip, TripDocument } from '@/features/models/trip.model';
 
 export class UserRepository extends MongoBaseRepository<UserDocument, IUser> {
   constructor() {

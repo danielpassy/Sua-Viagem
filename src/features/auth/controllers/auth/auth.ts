@@ -1,9 +1,9 @@
 import { Request, Response } from 'express';
 import { LoginDTO, RegisterDTO } from './auth.dto';
-import authService from '@/auth/services/auth';
-import { UserDocument } from '@/models';
 import config from '@/config';
 import { ThrowError } from '@/libs/error-helper';
+import authService from '@/features/auth/services/auth';
+import { UserDocument } from '@/features/models';
 
 export const register = async (req: Request<{}, {}, RegisterDTO>, res: Response) => {
   try {
@@ -14,23 +14,24 @@ export const register = async (req: Request<{}, {}, RegisterDTO>, res: Response)
   }
 };
 
-
 const serializeUser = (user: UserDocument) => {
   return {
     id: user._id,
     name: user.name,
-    email: user.email,
+    email: user.email
   };
-}
+};
 
 export const login = async (req: Request<object, {}, LoginDTO>, res: Response, next: any) => {
   try {
     const token = await authService.login(req.body);
     // send the user also.
-    return res.cookie('token', token, {
-      httpOnly: true,
-      maxAge: config.JWT_TTL
-    }).send('sent');
+    return res
+      .cookie('token', token, {
+        httpOnly: true,
+        maxAge: config.JWT_TTL
+      })
+      .send('sent');
   } catch (error: any) {
     ThrowError(next, error.message, 403);
   }

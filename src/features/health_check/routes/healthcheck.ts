@@ -1,4 +1,4 @@
-import { healthCheck } from '@/health_check/controllers/healthcheck.controller';
+import { healthCheck } from '@/features/health_check/controllers/healthcheck.controller';
 import express from 'express';
 
 const HealthRouter = express.Router();

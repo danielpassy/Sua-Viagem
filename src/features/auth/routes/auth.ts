@@ -1,5 +1,5 @@
-import { login, register } from '@/auth/controllers/auth/auth';
-import { LoginDTO, RegisterDTO } from '@/auth/controllers/auth/auth.dto';
+import { register, login } from '@/features/auth/controllers/auth/auth';
+import { RegisterDTO, LoginDTO } from '@/features/auth/controllers/auth/auth.dto';
 import validateBody from '@/middlewares/validate.middleware';
 import express from 'express';
 

@@ -1,21 +1,21 @@
-import { IUser } from '@/models';
-import { CreateTripDto } from '@/trips/controllers/auth/trips.dto';
-import { TripServiceInterface } from '@/trips/services/auth/trip.service.interface';
+import { ITrip } from '@/features/models/trip.model';
+import { CreateTripDto } from '@/features/trips/controllers/trips/trips.dto';
+import { TripServiceInterface } from '@/features/trips/services/auth/trip.service.interface';
 
 class MockTripsService implements TripServiceInterface {
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   public constructor() {}
-  updateTrip(tripDto: any): Promise<string> {
+  update(tripDto: any, tripId: any): Promise<string> {
     throw new Error('Method not implemented.');
   }
-  createTrip(createTripDto: CreateTripDto): Promise<IUser> {
+  create(createTripDto: CreateTripDto): Promise<ITrip> {
     throw new Error('Method not implemented.');
   }
 
-  deleteTrip(): Promise<void> {
+  delete(tripId: any): Promise<void> {
     throw new Error('Method not implemented.');
   }
-  getTrips(): Promise<void> {
+  list(): Promise<void> {
     throw new Error('Method not implemented.');
   }
 }

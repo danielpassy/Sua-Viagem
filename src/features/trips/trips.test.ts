@@ -4,6 +4,7 @@ import { CreateTripDto, Layouts } from '@/features/trips/controllers/trips/trips
 import db from '@/libs/db';
 import dayjs from 'dayjs';
 import mongoose from 'mongoose';
+import TripModel from '@/features/models/trip.model';
 
 beforeAll(async () => {
   await db.connect(`${globalThis.__MONGO_URI__}${globalThis.__MONGO_DB_NAME__}`);
@@ -24,9 +25,11 @@ afterAll(async () => {
 describe('should create a trip', async () => {
   const tripPayload = new CreateTripDto({
     initialDate: dayjs(),
-    destination: 'Silvanio',
+    destination: 'Rio de Janeiro',
     layout: Layouts.OneStop
   });
-  const response = await request(app).post('/api/auth/login').send(tripPayload);
+  const response = await request(app).post('/api/trips').send(tripPayload);
   expect(response.status).toBe(200);
+  const trip = await TripModel.findOne();
+  expect(trip).not.toBeNull();
 });
