@@ -1,20 +1,21 @@
 import config from '@/config';
 import { NextFunction, Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
+import cookie from 'cookie';
 
 const AuthMiddleware = (req: Request, res: Response, next: NextFunction) => {
-  const token = req.headers['x-access-token']?.[0];
-
-  if (!token) {
-    return res.status(403).send('A token is required for authentication');
-  }
   try {
-    const decoded: any = jwt.verify(token, config.JWT_KEY);
-    req.user = decoded;
+    const cookies = req.headers['cookie'];
+    const token = cookie.parse(cookies as string)['token'];
+    const { _id } = jwt.verify(token, config.JWT_KEY) as JwtPayload;
+    req.user = _id;
+    return next();
   } catch (err) {
-    return res.status(401).send('Invalid Token');
+    return res.status(401).send('A token is required for authentication');
   }
-  return next();
 };
 
+interface JwtPayload {
+  _id: string;
+}
 export default AuthMiddleware;

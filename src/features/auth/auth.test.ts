@@ -47,3 +47,16 @@ it('it should return token if correct login ', async () => {
   expect(response.status).toBe(200);
   expect(response.headers['set-cookie']).toBeDefined();
 });
+
+it('get the user by the jwt token ', async () => {
+  const registerData = new RegisterDTO({
+    email: 'ASDOKJSADKASDK',
+    password: 'ASDOKJSADKASDK'
+  });
+  await authService.register(registerData);
+
+  const loginData = new LoginDTO({ ...registerData });
+  const response = await request(app).post('/api/auth/login').send(loginData);
+  expect(response.status).toBe(200);
+  expect(response.headers['set-cookie']).toBeDefined();
+});
