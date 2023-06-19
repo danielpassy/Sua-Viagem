@@ -1,20 +1,33 @@
-import { TripRepository, IUser, UserDocument } from '@/features/models';
-import { ITrip } from '@/features/models/trip.model';
-import { CreateTripDto } from '@/features/trips/controllers/trips/trips.dto';
+import { TripRepository } from '@/features/models';
+import { ITrip, TripDocument } from '@/features/models/trip.model';
+import { CreateTripDto, UpdateTripDto } from '@/features/trips/controllers/trips/trips.dto';
 import { TripServiceInterface } from '@/features/trips/services/auth/trip.service.interface';
 
 export class TripService implements TripServiceInterface {
   public constructor(private _repository: TripRepository) {}
-  create(createTripDto: CreateTripDto, user: UserDocument): Promise<ITrip> {
+  create(createTripDto: CreateTripDto, userId: string): Promise<TripDocument> {
+    const trip = this._repository.create({
+      ...createTripDto,
+      owner: userId,
+      editors: []
+    });
+    return trip;
+  }
+  async update(tripDto: UpdateTripDto, tripId: any, userId: string): Promise<TripDocument | null> {
+    const trip = await this._repository.get(tripId);
+
+    if (!trip) throw new Error('Trip not found');
+
+    if (trip.owner != userId && !trip.editors.some((e) => e == userId)) {
+      throw new Error('The user has no permission to edit this trip');
+    }
+
+    return this._repository.update(tripId, tripDto);
+  }
+  delete(tripId: any, userId: string): Promise<void> {
     throw new Error('Method not implemented.');
   }
-  update(tripDto: any, tripId: any, user: UserDocument): Promise<string> {
-    throw new Error('Method not implemented.');
-  }
-  delete(tripId: any, user: UserDocument): Promise<void> {
-    throw new Error('Method not implemented.');
-  }
-  list(user: UserDocument): Promise<void> {
+  list(userId: string): Promise<void> {
     throw new Error('Method not implemented.');
   }
 }

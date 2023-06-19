@@ -1,6 +1,6 @@
 import { Model, Document } from 'mongoose';
 
-export abstract class MongoBaseRepository<T extends Document, V> {
+export abstract class MongoBaseRepository<T extends Document, I> {
   _mongoModel: Model<T>;
 
   // DOcument -> 1 thing
@@ -18,7 +18,7 @@ export abstract class MongoBaseRepository<T extends Document, V> {
     return await this._mongoModel.findOne({ [field]: value }).exec();
   }
 
-  async create(item: V): Promise<T> {
+  async create(item: I): Promise<T> {
     return await this._mongoModel.create(item);
   }
 

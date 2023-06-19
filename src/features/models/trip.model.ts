@@ -5,12 +5,12 @@ import mongoose, { Schema, model, HydratedDocument } from 'mongoose';
 type Trip = Object;
 
 export interface ITrip {
-  name: String;
+  name?: String;
   destination: String;
-  initialDate: Dayjs;
+  initialDate?: Dayjs;
   data: Trip;
-  editors: Array<UserDocument>;
-  owner: UserDocument;
+  editors: Array<UserDocument | string>;
+  owner: UserDocument | string;
 }
 
 const TripsSchema = new Schema<ITrip>(

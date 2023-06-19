@@ -25,6 +25,7 @@
     "pino": "^8.14.1"
   },
   "devDependencies": {
+    "@faker-js/faker": "^8.0.2",
     "@shelf/jest-mongodb": "^4.1.7",
     "@types/bcrypt": "^5.0.0",
     "@types/cookie": "^0.5.1",
