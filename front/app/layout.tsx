@@ -3,7 +3,6 @@ import { SnackBarContextProvider } from '@/app/context/snack-context';
 import './globals.css';
 import { Inter } from 'next/font/google';
 import { AuthContextProvider } from '@/app/context/auth-context';
-import AppSnackbar from '@/app/app-snackbar';
 import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
@@ -12,6 +11,8 @@ import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import theme from '@/app/theme';
 import { ThemeProvider } from '@mui/material';
+import AppSnackbar from '@/app/components/app/app-snackbar';
+import NavBar from '@/app/components/app/navbar';
 
 // const inter = Inter({ subsets: ['latin'] });
 

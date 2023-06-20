@@ -29,7 +29,7 @@ export default function NavBar() {
         </IconButton>
 
         <IconButton
-          onClick={() => router.push('/newTrip')}
+          onClick={() => router.push('/')}
           color="inherit"
           aria-label="newTrip"
         >
@@ -44,13 +44,13 @@ export default function NavBar() {
           <AccountCircleIcon sx={iconsClass} />
         </IconButton>
 
-        <IconButton
+        {/* <IconButton
           onClick={() => router.push('/help')}
           color="inherit"
           aria-label="help"
         >
           <Help sx={iconsClass} />
-        </IconButton>
+        </IconButton> */}
       </Toolbar>
     </AppBar>
   );

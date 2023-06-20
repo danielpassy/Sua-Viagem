@@ -31,6 +31,9 @@ export const login = async (req: Request<object, {}, LoginDTO>, res: Response, n
         httpOnly: true,
         maxAge: config.JWT_TTL
       })
+      .cookie('authToken', 'no-value', {
+        maxAge: config.JWT_TTL
+      })
       .send('sent');
   } catch (error: any) {
     ThrowError(next, error.message, 403);

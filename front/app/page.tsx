@@ -1,14 +1,14 @@
 'use client';
 
 import api from '@api';
-import NavBar from '@/app/navbar';
 import { Box, Button, MobileStepper } from '@mui/material';
 import { useState } from 'react';
-import { SearchBox } from './SearchBox';
-import { DateSelect } from './date-select';
+import { SearchBox } from './components/SearchBox';
 import { KeyboardArrowLeft, KeyboardArrowRight } from '@mui/icons-material';
 import dayjs, { Dayjs } from 'dayjs';
-import LayoutSelect from '@/app/layout-select';
+import NavBar from '@/app/components/app/navbar';
+import { DateSelect } from '@/app/components/date-select';
+import LayoutSelect from '@/app/components/layout-select';
 
 export enum Layouts {
   OneStop = 'oneStop',
