@@ -6,7 +6,10 @@ type Trip = Object;
 
 export interface ITrip {
   name?: String;
+
   destination: String;
+  // Duration attribute
+  Duration?: Dayjs;
   initialDate?: Dayjs;
   data: Trip;
   editors: Array<UserDocument | string>;
@@ -18,6 +21,7 @@ const TripsSchema = new Schema<ITrip>(
     name: { type: String },
     destination: { type: String },
     initialDate: { type: Date },
+    Duration: { type: Date },
     data: { type: Object },
     editors: [
       {
