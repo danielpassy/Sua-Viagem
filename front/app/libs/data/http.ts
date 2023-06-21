@@ -9,4 +9,11 @@ const AxiosClient = axios.create({
 
 AxiosClient.defaults.headers.common['Content-Type'] = 'application/json';
 
+export function mockasync(data: any) {
+  data = JSON.parse(JSON.stringify(data));
+  return new Promise((resolve) => {
+    setTimeout(() => resolve({ data }), 600);
+  });
+}
+
 export default AxiosClient;

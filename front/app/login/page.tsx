@@ -60,6 +60,7 @@ export default function login() {
           sm: '50vw',
           xs: '90vw',
         },
+        margin: 'auto',
         pt: 3,
       }}
     >
