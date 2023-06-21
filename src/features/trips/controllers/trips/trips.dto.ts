@@ -9,6 +9,7 @@ export class CreateTripDto {
     Object.assign(this, init);
   }
   initialDate?: Dayjs;
+  duration?: Dayjs;
   destination: string;
   data: Layouts;
   name: string;

@@ -1,5 +1,5 @@
 import { TripRepository } from '@/features/models';
-import { ITrip, TripDocument } from '@/features/models/trip.model';
+import { TripDocument } from '@/features/models/trip.model';
 import { CreateTripDto, UpdateTripDto } from '@/features/trips/controllers/trips/trips.dto';
 import { TripServiceInterface } from '@/features/trips/services/auth/trip.service.interface';
 

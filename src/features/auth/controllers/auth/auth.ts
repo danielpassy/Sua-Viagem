@@ -25,7 +25,6 @@ const serializeUser = (user: UserDocument) => {
 export const login = async (req: Request<object, {}, LoginDTO>, res: Response, next: any) => {
   try {
     const token = await authService.login(req.body);
-    // send the user also.
     return res
       .cookie('token', token, {
         httpOnly: true,
