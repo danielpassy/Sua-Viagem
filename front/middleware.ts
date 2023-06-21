@@ -3,7 +3,6 @@ import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
 export function middleware(request: NextRequest) {
-  console.log('should run in /login', request.url);
   const authCookie = request.cookies.get('authToken');
   if (authCookie) {
     return NextResponse.next();
