@@ -1,7 +1,7 @@
 'use client';
 import { Search } from '@mui/icons-material';
 import FmdGoodOutlinedIcon from '@mui/icons-material/FmdGoodOutlined';
-import { IconButton, InputAdornment, TextField, Typography } from '@mui/material';
+import { Box, IconButton, InputAdornment, TextField, Typography } from '@mui/material';
 
 export function SearchBox({
   setDestination,
@@ -14,11 +14,14 @@ export function SearchBox({
 }) {
   return (
     <>
-      <Typography color="textPrimary" variant="h6" sx={{ mb: 0, fontWeight: 400 }}>
-        Where are you going?
-      </Typography>
       <TextField
-        sx={{ width: '70%' }}
+        sx={{
+          width: '90%',
+          color: 'whitesmoke',
+          backgroundColor: `white`,
+          borderRadius: 4,
+        }}
+        placeholder="Qual destino?"
         id="outlined-select-currency"
         value={destination}
         onKeyDown={(e) => {
@@ -35,9 +38,13 @@ export function SearchBox({
           ),
           endAdornment: (
             <InputAdornment position="end">
-              <IconButton onClick={() => submit()}>
-                <Search />
-              </IconButton>
+              <Box
+                sx={{ backgroundColor: '#EB6E5D', borderRadius: '10px', mr: '-3px' }}
+              >
+                <IconButton sx={{ color: 'whitesmoke' }} onClick={() => submit()}>
+                  <Search />
+                </IconButton>
+              </Box>
             </InputAdornment>
           ),
         }}

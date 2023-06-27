@@ -1,118 +1,93 @@
 'use client';
 
-import api from '@api';
-import { Box, Button, MobileStepper, Typography } from '@mui/material';
-import { useState } from 'react';
-import { SearchBox } from './components/SearchBox';
-import { KeyboardArrowLeft, KeyboardArrowRight } from '@mui/icons-material';
-import dayjs, { Dayjs } from 'dayjs';
+import { Box, Card, CardContent, IconButton, Typography, styled } from '@mui/material';
 import NavBar from '@/app/components/app/navbar';
-import { DateSelect } from '@/app/components/date-select';
-import LayoutSelect from '@/app/components/layout-select';
-import Carousel from '@/app/destionations-carousel';
+import { SearchBox } from '@/app/components/SearchBox';
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import DestinationCarousel from '@/app/destinations-carousel';
+import { Person } from '@mui/icons-material';
 
-export enum Layouts {
-  OneStop = 'oneStop',
-  International = 'international',
-}
-export interface formInterface {
-  initialDate: null | Dayjs;
-  destination: '';
-  layout: Layouts;
-}
-
-function NewTrip() {
-  const [activeStep, setActiveStep] = useState(0);
-  const [formData, setFormData] = useState<formInterface>({
-    initialDate: dayjs(),
-    destination: '',
-    layout: Layouts.OneStop,
-  });
-
-  const handleFormChange = (name: keyof formInterface, value: any) => {
-    setFormData({ ...formData, [name]: value });
-  };
-
-  const handleNext = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep + 1);
-  };
-
-  const handleBack = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep - 1);
-  };
-
-  const submitForm = async () => {
-    await api.trip.createTrip(formData);
-  };
-  return (
-    <Box
-      sx={{
-        width: '100%',
-        justifyContent: 'center',
-        flexDirection: 'column',
-        alignItems: 'center',
-        display: 'flex',
-        margin: 'auto',
-      }}
-    >
-      {activeStep === 0 ? (
-        <SearchBox
-          setDestination={(value: string) => handleFormChange('destination', value)}
-          destination={formData.destination}
-          submit={() => handleNext()}
-        />
-      ) : null}
-      {activeStep === 1 ? (
-        <DateSelect
-          setDate={(value: any) => {
-            handleFormChange('initialDate', value), handleNext();
-          }}
-          date={formData.initialDate}
-        />
-      ) : null}
-      {activeStep === 2 ? (
-        <LayoutSelect
-          setLayout={(value: any) => {
-            handleFormChange('layout', value);
-          }}
-          layout={formData.layout}
-          submitForm={submitForm}
-        />
-      ) : null}
-
-      <MobileStepper
-        variant="dots"
-        steps={3}
-        position="top"
-        activeStep={activeStep}
-        sx={{
-          with: '100%',
-        }}
-        nextButton={
-          <Button size="small" onClick={handleNext} disabled={activeStep === 2}>
-            Previous
-            <KeyboardArrowRight />
-          </Button>
-        }
-        backButton={
-          <Button size="small" onClick={handleBack} disabled={activeStep === 0}>
-            <KeyboardArrowLeft />
-            Back
-          </Button>
-        }
-      />
-    </Box>
-  );
-}
+const StyledIconButton = styled(IconButton)(({ theme }) => ({
+  position: 'relative',
+  '&::before': {
+    content: '""',
+    zIndex: 1,
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: '40px',
+    height: '40px',
+    borderRadius: '50%',
+    backgroundColor: 'rgb(59 130 246 / 0.7)',
+  },
+}));
 
 export default function Home() {
+  const [searchTerm, setSearchTerm] = useState('');
+  const router = useRouter();
   return (
-    <main style={{ width: '100%', height: '100%', display: 'flex' }}>
-      <NewTrip />
-      <Box sx={{ width: '100%', height: '100%', display: 'flex' }}>
-        <Typography variant="h1">Explore Destinatin</Typography>
-        <DestinationCarousel />
+    <main
+      style={{
+        width: '100%',
+        height: '100%',
+        display: 'flex',
+        flexDirection: 'column',
+        backgroundColor: '#29589e',
+      }}
+    >
+      <Box
+        sx={{
+          width: '100%',
+          display: 'flex',
+          pt: '2vh',
+          pb: '4vh',
+          flexDirection: 'column',
+          alignItems: 'center',
+        }}
+      >
+        <Box
+          sx={{
+            width: '100%',
+            pl: '10%',
+            pb: '4%',
+            display: 'flex',
+            flexDirection: 'row',
+          }}
+        >
+          <Box sx={{ width: '50%' }}>
+            <Typography color="white" variant="h5" sx={{ mb: 1, fontWeight: 700 }}>
+              Qual sua próxima aventura?
+            </Typography>
+          </Box>
+          <Box sx={{ width: '50%', display: 'flex' }}>
+            <StyledIconButton
+              sx={{
+                position: 'absolute',
+                right: 10,
+                top: '2vh',
+              }}
+              onClick={() => ({})}
+            >
+              <Person sx={{ color: 'white', zIndex: 2, fontSize: '1.25em' }} />
+            </StyledIconButton>{' '}
+          </Box>
+        </Box>
+        <SearchBox
+          setDestination={(value: string) => setSearchTerm(value)}
+          destination={searchTerm}
+          submit={() => router.push(`new-trip?searchTerm=${searchTerm}`)}
+        />
       </Box>
+      <Card sx={{ borderRadius: '30px', backgroundColor: 'white' }}>
+        <CardContent>
+          <Typography variant="h5">
+            Explore roteiros que seus amigos fizeram:
+          </Typography>
+          <DestinationCarousel />
+        </CardContent>
+      </Card>
       <NavBar />
     </main>
   );

@@ -4,9 +4,9 @@ import type { NextRequest } from 'next/server';
 
 export function middleware(request: NextRequest) {
   const authCookie = request.cookies.get('authToken');
-  if (authCookie) {
-    return NextResponse.next();
-  }
+  // if (authCookie) {
+  return NextResponse.next();
+  // }
   const loginUrl = new URL('/login', request.url);
 
   return NextResponse.redirect(loginUrl);
