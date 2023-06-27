@@ -2,6 +2,7 @@ import config from '@/config';
 import { NextFunction, Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
 import cookie from 'cookie';
+import logger from '@/libs/logger';
 
 const AuthMiddleware = (req: Request, res: Response, next: NextFunction) => {
   try {
@@ -10,7 +11,8 @@ const AuthMiddleware = (req: Request, res: Response, next: NextFunction) => {
     const { _id } = jwt.verify(token, config.JWT_KEY) as JwtPayload;
     req.user = _id;
     return next();
-  } catch (err) {
+  } catch (err: any) {
+    logger.info(`error, ${err.message}`);
     return res.status(401).send('A token is required for authentication');
   }
 };
