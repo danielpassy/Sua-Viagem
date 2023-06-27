@@ -24,6 +24,6 @@
       "@api": ["./app/libs/data"],
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "app/libs/data/mock-server.js"],
   "exclude": ["node_modules"]
 }
