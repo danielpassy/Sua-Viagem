@@ -2,9 +2,9 @@ import { AppBar, IconButton, Toolbar } from '@mui/material';
 import React from 'react';
 import FlightIcon from '@mui/icons-material/Flight';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import Help from '@mui/icons-material/Help';
 import { useRouter } from 'next/navigation';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import { Home } from '@mui/icons-material';
 
 export const navBarHeight = '56px';
 
@@ -20,6 +20,10 @@ export default function NavBar() {
           justifyContent: 'space-evenly',
         }}
       >
+        <IconButton onClick={() => router.push('/')} color="inherit" aria-label="home">
+          <Home sx={iconsClass} />
+        </IconButton>
+
         <IconButton
           onClick={() => router.push('/trips')}
           color="inherit"
