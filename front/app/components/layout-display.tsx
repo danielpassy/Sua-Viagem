@@ -1,4 +1,4 @@
-import { Layouts } from '@/app/page';
+import { Layouts } from '@/app/new-trip/page';
 import { Button, Card, CardActions, CardContent, Typography } from '@mui/material';
 
 export default function LayoutDisplay({ layout }: { layout: Layouts }) {
