@@ -7,7 +7,6 @@ import api from '@api';
 import { KeyboardArrowLeft, KeyboardArrowRight } from '@mui/icons-material';
 import { Box, MobileStepper, Button } from '@mui/material';
 import { useEffect, useState } from 'react';
-import timeSvc from '@/app/libs/time-svc';
 import { Dayjs } from 'dayjs';
 import { useSearchParams } from 'next/navigation';
 import NavBar from '@/app/components/app/navbar';
@@ -17,7 +16,9 @@ export enum Layouts {
   International = 'international',
 }
 export interface formInterface {
-  initialDate: null | Dayjs;
+  initialDate?: Dayjs;
+  endDate?: Dayjs;
+  duration?: number;
   destination: '';
   layout: Layouts;
 }
@@ -25,10 +26,13 @@ export default function NewTrip() {
   const searchParams = useSearchParams();
   const [activeStep, setActiveStep] = useState(0);
   const [formData, setFormData] = useState<formInterface>({
-    initialDate: timeSvc(),
+    initialDate: undefined,
+    endDate: undefined,
+    duration: undefined,
     destination: '',
     layout: Layouts.OneStop,
   });
+
   useEffect(() => {
     const searchTerm = searchParams.get('searchTerm');
     if (searchTerm) {
@@ -72,10 +76,15 @@ export default function NewTrip() {
       ) : null}
       {activeStep === 1 ? (
         <DateSelect
-          setDate={(value: any) => {
-            handleFormChange('initialDate', value), handleNext();
+          setInitialDate={(value: any) => {
+            handleFormChange('initialDate', value);
           }}
-          date={formData.initialDate}
+          setEndDate={(value: any) => handleFormChange('endDate', value)}
+          setDuration={(value: any) => handleFormChange('duration', value)}
+          next={handleNext}
+          initialDate={formData.initialDate}
+          endDate={formData.endDate}
+          duration={formData.duration}
         />
       ) : null}
       {activeStep === 2 ? (

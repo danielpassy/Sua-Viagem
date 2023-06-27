@@ -1,19 +1,42 @@
 'use client';
-import { Checkbox, Container, FormControlLabel, Typography } from '@mui/material';
+import {
+  Button,
+  Container,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+  Typography,
+} from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import dayjs, { Dayjs } from 'dayjs';
+import { Dayjs } from 'dayjs';
+import { useState } from 'react';
 
 export function DateSelect({
-  setDate,
-  date,
+  setInitialDate,
+  setEndDate,
+  setDuration,
+  next,
+  initialDate,
+  endDate,
+  duration,
 }: {
-  setDate: Function;
-  date: Dayjs | null;
+  setInitialDate: Function;
+  setEndDate: Function;
+  setDuration: Function;
+  next: Function;
+  initialDate?: Dayjs;
+  endDate?: Dayjs;
+  duration?: number;
 }) {
-  const handleChange = (value: dayjs.Dayjs | null) => {
-    setDate(value);
+  const [datePickerReseter, setDatePickerReseter] = useState(0);
+  const [durationReseter, setDurationReseter] = useState(0);
+  const resetDatePickers = () => {
+    setDatePickerReseter(datePickerReseter + 1);
   };
-
+  const resetDuration = () => {
+    setDurationReseter(durationReseter + 1);
+  };
   return (
     <>
       <Typography variant="h6" sx={{ mt: 3 }} component="p">
@@ -28,22 +51,55 @@ export function DateSelect({
           my: 3,
         }}
       >
-        <DatePicker
-          sx={{ width: '45%', fontWeight: '12px' }}
-          label="Data inicial"
-          value={date}
-          onChange={(newValue) => handleChange(newValue)}
-        />
-        <Typography variant="subtitle2" sx={{ my: 3 }} component="p">
+        <Container sx={{ display: 'flex', flexDirection: 'row' }}>
+          <DatePicker
+            key={datePickerReseter}
+            sx={{ margin: '6px', width: '50%', fontWeight: '12px' }}
+            label="Ida"
+            value={initialDate}
+            onChange={(value) => {
+              setInitialDate(value);
+              setDuration(undefined);
+              resetDuration();
+            }}
+          />
+
+          <DatePicker
+            key={datePickerReseter + 2}
+            sx={{ margin: '6px', width: '50%', fontWeight: '12px' }}
+            label="Volta"
+            value={endDate}
+            onChange={(value) => {
+              setEndDate(value);
+              setDuration(undefined);
+              resetDuration();
+            }}
+          />
+        </Container>
+        <Typography variant="subtitle1" sx={{ my: 3 }} component="p">
           Ou
         </Typography>
-        <FormControlLabel
-          sx={{ mr: 0, width: '45%', marginLeft: '7vw' }}
-          label="Eu sei lá"
-          control={
-            <Checkbox checked={date === null} onChange={() => handleChange(null)} />
-          }
-        />
+        <FormControl key={durationReseter} sx={{ m: 1, minWidth: '45vw' }}>
+          <InputLabel id="demo-simple-select-helper-label">Duração</InputLabel>
+          <Select
+            label="Duração"
+            variant="outlined"
+            value={duration}
+            onChange={(e) => {
+              setDuration(e.target.value);
+              setInitialDate(undefined);
+              setEndDate(undefined);
+              resetDatePickers();
+            }}
+          >
+            {Array.from(Array(100).keys()).map((el) => (
+              <MenuItem value={el}>{el} Dias</MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+        <Button variant="contained" onClick={(_) => next()}>
+          Próximo
+        </Button>
       </Container>
     </>
   );

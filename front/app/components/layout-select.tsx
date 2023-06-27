@@ -40,7 +40,7 @@ export default function LayoutSelect({
         </Select>
       </FormControl>
       <LayoutDisplay layout={layout} />
-      <Button variant="contained" onClick={submitForm}>
+      <Button variant="contained" onClick={() => submitForm}>
         Criar Viagem
       </Button>
     </Box>
