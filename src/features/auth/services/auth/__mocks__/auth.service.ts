@@ -1,7 +1,6 @@
-import { RegisterDTO, LoginDTO } from '@/auth/controllers/auth/auth.dto';
-import { AuthServiceInterface } from '@/auth/services/auth/auth.service.interface';
-import { IUser } from '@/models';
-import UserModel from '@/models/user.model';
+import { RegisterDTO, LoginDTO } from '@/features/auth/controllers/auth/auth.dto';
+import { AuthServiceInterface } from '@/features/auth/services/auth/auth.service.interface';
+import UserModel, { IUser } from '@/features/models/user.model';
 
 class MockAuthService implements AuthServiceInterface {
   // eslint-disable-next-line @typescript-eslint/no-empty-function
