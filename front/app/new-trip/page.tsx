@@ -2,7 +2,7 @@
 
 import { SearchBox } from '@/app/components/SearchBox';
 import { DateSelect } from '@/app/components/date-select';
-import LayoutSelect from '@/app/components/layout-select';
+import InvitePeople from '@/app/components/invite-people';
 import api from '@api';
 import { KeyboardArrowLeft, KeyboardArrowRight } from '@mui/icons-material';
 import { Box, MobileStepper, Button } from '@mui/material';
@@ -21,6 +21,7 @@ export interface formInterface {
   duration?: number;
   destination: '';
   layout: Layouts;
+  editors: string[];
 }
 export default function NewTrip() {
   const searchParams = useSearchParams();
@@ -31,6 +32,7 @@ export default function NewTrip() {
     duration: undefined,
     destination: '',
     layout: Layouts.OneStop,
+    editors: [],
   });
 
   useEffect(() => {
@@ -76,23 +78,19 @@ export default function NewTrip() {
       ) : null}
       {activeStep === 1 ? (
         <DateSelect
-          setInitialDate={(value: any) => {
-            handleFormChange('initialDate', value);
+          setDates={({ initialDate, endDate, duration }: any) => {
+            handleFormChange('initialDate', initialDate);
+            handleFormChange('endDate', endDate);
+            handleFormChange('duration', duration);
           }}
-          setEndDate={(value: any) => handleFormChange('endDate', value)}
-          setDuration={(value: any) => handleFormChange('duration', value)}
           next={handleNext}
-          initialDate={formData.initialDate}
-          endDate={formData.endDate}
-          duration={formData.duration}
         />
       ) : null}
       {activeStep === 2 ? (
-        <LayoutSelect
-          setLayout={(value: any) => {
+        <InvitePeople
+          setInvitations={(value: any) => {
             handleFormChange('layout', value);
           }}
-          layout={formData.layout}
           submitForm={submitForm}
         />
       ) : null}

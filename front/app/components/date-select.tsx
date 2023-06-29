@@ -1,6 +1,10 @@
 'use client';
 import {
+  Box,
   Button,
+  Card,
+  CardContent,
+  Collapse,
   Container,
   FormControl,
   InputLabel,
@@ -11,95 +15,166 @@ import {
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { Dayjs } from 'dayjs';
 import { useState } from 'react';
+import { TransitionGroup } from 'react-transition-group';
 
 export function DateSelect({
-  setInitialDate,
-  setEndDate,
-  setDuration,
+  setDates,
   next,
-  initialDate,
-  endDate,
-  duration,
 }: {
-  setInitialDate: Function;
-  setEndDate: Function;
-  setDuration: Function;
+  setDates: Function;
+
   next: Function;
-  initialDate?: Dayjs;
-  endDate?: Dayjs;
-  duration?: number;
 }) {
-  const [datePickerReseter, setDatePickerReseter] = useState(0);
-  const [durationReseter, setDurationReseter] = useState(0);
-  const resetDatePickers = () => {
-    setDatePickerReseter(datePickerReseter + 1);
+  const [showDatePicker, setShowDatePicker] = useState(false);
+  const [showDurationPicker, setShowDurationPicker] = useState(false);
+
+  const [initialDate, setInitialDate] = useState<Dayjs | null>(null);
+  const [endDate, setEndDate] = useState<Dayjs | null>(null);
+  const [duration, setDuration] = useState<number | null>(null);
+
+  const handleSubmit = (field: 'duration' | 'dates') => {
+    if (field === 'duration') {
+      setDates({ duration });
+    } else {
+      setDates({ initialDate, endDate });
+    }
+    next();
   };
-  const resetDuration = () => {
-    setDurationReseter(durationReseter + 1);
+
+  const alignItensContainerStyle = {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+  };
+
+  const selectCardStyle = {
+    ...alignItensContainerStyle,
+    cursor: 'pointer',
+    borderRadius: '3px',
+    width: '85vw',
+    height: '30vh',
   };
   return (
     <>
-      <Typography variant="h6" sx={{ mt: 3 }} component="p">
-        Quando?
-      </Typography>
-      <Container
-        sx={{
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'center',
-          alignItems: 'center',
-          my: 3,
-        }}
-      >
-        <Container sx={{ display: 'flex', flexDirection: 'row' }}>
-          <DatePicker
-            key={datePickerReseter}
-            sx={{ margin: '6px', width: '50%', fontWeight: '12px' }}
-            label="Ida"
-            value={initialDate}
-            onChange={(value) => {
-              setInitialDate(value);
-              setDuration(undefined);
-              resetDuration();
-            }}
-          />
+      <Container sx={alignItensContainerStyle}>
+        <Card
+          variant="outlined"
+          sx={selectCardStyle}
+          onClick={() => {
+            setShowDatePicker(true), setShowDurationPicker(false);
+          }}
+        >
+          <CardContent sx={alignItensContainerStyle}>
+            <>
+              <Typography variant="h6" component="p">
+                Escolher Data
+              </Typography>
+              <TransitionGroup>
+                {showDatePicker ? (
+                  <Collapse>
+                    {
+                      <Box sx={{ ...alignItensContainerStyle }}>
+                        <Box sx={{ display: 'flex', flexDirection: 'row' }}>
+                          <DatePicker
+                            sx={{ margin: '6px', width: '50%', fontWeight: '12px' }}
+                            label="Ida"
+                            value={initialDate}
+                            onChange={(value) => {
+                              setInitialDate(value);
+                            }}
+                          />
+                          <DatePicker
+                            sx={{ margin: '6px', width: '50%', fontWeight: '12px' }}
+                            label="Volta"
+                            value={endDate}
+                            onChange={(value) => {
+                              setEndDate(value);
+                            }}
+                          />
+                        </Box>
+                      </Box>
+                    }
+                  </Collapse>
+                ) : null}
+                {showDatePicker && initialDate && endDate ? (
+                  <Collapse sx={{ textAlign: 'center' }}>
+                    <Button
+                      variant="outlined"
+                      onClick={() => {
+                        handleSubmit('dates');
+                      }}
+                    >
+                      Próximo
+                    </Button>
+                  </Collapse>
+                ) : (
+                  ''
+                )}
+              </TransitionGroup>
+            </>
+          </CardContent>
+        </Card>
 
-          <DatePicker
-            key={datePickerReseter + 2}
-            sx={{ margin: '6px', width: '50%', fontWeight: '12px' }}
-            label="Volta"
-            value={endDate}
-            onChange={(value) => {
-              setEndDate(value);
-              setDuration(undefined);
-              resetDuration();
-            }}
-          />
-        </Container>
-        <Typography variant="subtitle1" sx={{ my: 3 }} component="p">
-          Ou
-        </Typography>
-        <FormControl key={durationReseter} sx={{ m: 1, minWidth: '45vw' }}>
-          <InputLabel id="demo-simple-select-helper-label">Duração</InputLabel>
-          <Select
-            label="Duração"
-            variant="outlined"
-            value={duration}
-            onChange={(e) => {
-              setDuration(e.target.value);
-              setInitialDate(undefined);
-              setEndDate(undefined);
-              resetDatePickers();
-            }}
-          >
-            {Array.from(Array(100).keys()).map((el) => (
-              <MenuItem value={el}>{el} Dias</MenuItem>
-            ))}
-          </Select>
-        </FormControl>
-        <Button variant="contained" onClick={(_) => next()}>
-          Próximo
-        </Button>
+        <Box sx={{ m: 4 }} />
+
+        <Card
+          variant="outlined"
+          sx={selectCardStyle}
+          onClick={() => {
+            setShowDurationPicker(true);
+            setShowDatePicker(false);
+          }}
+        >
+          <CardContent sx={alignItensContainerStyle}>
+            <>
+              <Typography variant="h6" component="p">
+                Escolher Duração
+              </Typography>
+              <TransitionGroup>
+                {showDurationPicker ? (
+                  <Collapse>
+                    {
+                      <Container sx={alignItensContainerStyle}>
+                        <FormControl sx={{ m: 1, minWidth: '45vw' }}>
+                          <InputLabel id="demo-simple-select-helper-label">
+                            Duração
+                          </InputLabel>
+                          <Select
+                            label="Duração"
+                            variant="outlined"
+                            value={duration}
+                            onChange={(e) => {
+                              setDuration(e.target.value);
+                            }}
+                          >
+                            {Array.from(Array(100).keys()).map((el) => (
+                              <MenuItem value={el}>{el} Dias</MenuItem>
+                            ))}
+                          </Select>
+                        </FormControl>
+                      </Container>
+                    }
+                  </Collapse>
+                ) : null}
+                {showDurationPicker && duration ? (
+                  <Collapse sx={{ textAlign: 'center' }}>
+                    <Button
+                      variant="outlined"
+                      onClick={() => {
+                        handleSubmit('duration');
+                      }}
+                    >
+                      Próximo
+                    </Button>
+                  </Collapse>
+                ) : (
+                  ''
+                )}
+              </TransitionGroup>
+            </>
+          </CardContent>
+        </Card>
       </Container>
     </>
   );

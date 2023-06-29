@@ -1,7 +1,7 @@
 'use client';
 import { Search } from '@mui/icons-material';
 import FmdGoodOutlinedIcon from '@mui/icons-material/FmdGoodOutlined';
-import { Box, IconButton, InputAdornment, TextField, Typography } from '@mui/material';
+import { Box, IconButton, InputAdornment, TextField } from '@mui/material';
 
 export function SearchBox({
   setDestination,

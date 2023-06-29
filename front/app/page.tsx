@@ -8,7 +8,7 @@ import { useRouter } from 'next/navigation';
 import DestinationCarousel from '@/app/destinations-carousel';
 import { Person } from '@mui/icons-material';
 
-const StyledIconButton = styled(IconButton)(({ theme }) => ({
+const StyledIconButton = styled(IconButton)(() => ({
   position: 'relative',
   '&::before': {
     content: '""',
