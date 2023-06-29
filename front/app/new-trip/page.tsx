@@ -89,7 +89,7 @@ export default function NewTrip() {
       {activeStep === 2 ? (
         <InvitePeople
           setInvitations={(value: any) => {
-            handleFormChange('layout', value);
+            handleFormChange('editors', value);
           }}
           submitForm={submitForm}
         />
