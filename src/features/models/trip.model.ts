@@ -1,4 +1,5 @@
 import { UserDocument } from '@/features/models/user.model';
+import { userIdType } from '@/types';
 import { Dayjs } from 'dayjs';
 import mongoose, { Schema, model, HydratedDocument } from 'mongoose';
 
@@ -6,14 +7,12 @@ type Trip = Object;
 
 export interface ITrip {
   name?: String;
-
   destination: String;
-  // Duration attribute
   Duration?: Dayjs;
   initialDate?: Dayjs;
   data: Trip;
-  editors: Array<UserDocument | string>;
-  owner: UserDocument | string;
+  editors: UserDocument[] | userIdType[];
+  owner: UserDocument | userIdType;
 }
 
 const TripsSchema = new Schema<ITrip>(

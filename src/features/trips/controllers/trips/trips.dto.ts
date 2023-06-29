@@ -1,4 +1,5 @@
 import { Dayjs } from 'dayjs';
+import mongoose from 'mongoose';
 
 export enum Layouts {
   OneStop = 'oneStop',
@@ -9,10 +10,11 @@ export class CreateTripDto {
     Object.assign(this, init);
   }
   initialDate?: Dayjs;
-  duration?: Dayjs;
+  duration?: plugin.Duration;
   destination: string;
   data: Layouts;
   name: string;
+  editorsEmail: string[];
 }
 
 export class UpdateTripDto {
@@ -23,5 +25,5 @@ export class UpdateTripDto {
   destination?: string;
   data?: object;
   name?: string;
-  editors?: string[];
+  editors?: string[] | mongoose.Types.ObjectId[];
 }

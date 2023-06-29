@@ -1,4 +1,4 @@
-import { Schema, model, Document, HydratedDocument } from 'mongoose';
+import { Schema, model, HydratedDocument } from 'mongoose';
 export interface IUser {
   name?: string;
   email: string;
@@ -14,7 +14,7 @@ const userSchema = new Schema<IUser>(
   { timestamps: true }
 );
 
-export type UserDocument = HydratedDocument<IUser>
+export type UserDocument = HydratedDocument<IUser>;
 const UserModel = model<UserDocument>('User', userSchema);
 
 export default UserModel;

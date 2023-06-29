@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
-import tripService from '@/features/trips/services/auth';
 import { CreateTripDto, UpdateTripDto } from '@/features/trips/controllers/trips/trips.dto';
+import tripService from '@/features/trips/services';
 
 export const createTrip = async (req: Request<{}, {}, CreateTripDto>, res: Response) => {
   try {

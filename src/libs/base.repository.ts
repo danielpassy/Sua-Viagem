@@ -10,12 +10,16 @@ export abstract class MongoBaseRepository<T extends Document, I> {
     return await this._mongoModel.find().exec();
   }
 
-  async get(id: any): Promise<T | null> {
+  async getById(id: any): Promise<T | null> {
     return await this._mongoModel.findById(id).exec();
   }
 
   async getByField(field: any, value: any): Promise<T | null> {
     return await this._mongoModel.findOne({ [field]: value }).exec();
+  }
+
+  async find(query: any): Promise<T[] | null> {
+    return await this._mongoModel.find(query).exec();
   }
 
   async create(item: I): Promise<T> {

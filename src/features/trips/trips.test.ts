@@ -5,10 +5,7 @@ import db from '@/libs/db';
 import dayjs from 'dayjs';
 import mongoose from 'mongoose';
 import TripModel from '@/features/models/trip.model';
-import config from '@/config';
-import jwt from 'jsonwebtoken';
-import UserModel from '@/features/models/user.model';
-import { faker } from '@faker-js/faker';
+import fixtures from '@/test/fixtures';
 
 beforeAll(async () => {
   await db.connect(`${globalThis.__MONGO_URI__}${globalThis.__MONGO_DB_NAME__}`);
@@ -27,8 +24,8 @@ afterAll(async () => {
 });
 
 it('should create a trip', async () => {
-  const user = await createUser();
-  const token = await getJwt(user);
+  const user = await fixtures.createUser();
+  const token = await fixtures.getJwt(user);
 
   const tripPayload = new CreateTripDto({
     initialDate: dayjs(),
@@ -47,9 +44,9 @@ it('should create a trip', async () => {
 });
 
 it('update the trip with an editor', async () => {
-  const user = await createUser();
-  const secondUser = await createUser();
-  const token = await getJwt(user);
+  const user = await fixtures.createUser();
+  const secondUser = await fixtures.createUser();
+  const token = await fixtures.getJwt(user);
 
   const trip = await TripModel.create({
     initialDate: dayjs(),
@@ -75,14 +72,3 @@ it('update the trip with an editor', async () => {
     console.log(error);
   }
 });
-
-const createUser = async () => {
-  return await UserModel.create({
-    email: faker.internet.email(),
-    password: faker.internet.password()
-  });
-};
-
-async function getJwt(user: any) {
-  return jwt.sign({ _id: user._id }, config.JWT_KEY, { expiresIn: '1d' });
-}
