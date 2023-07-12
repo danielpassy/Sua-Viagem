@@ -188,6 +188,7 @@ function RegisterForm() {
   const [password, setPassword] = useState('');
   const [repeatPassword, setRepeatPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
+  const router = useRouter();
 
   const passwordsMatch = password === repeatPassword;
   const canSubmit = !!(
@@ -199,7 +200,6 @@ function RegisterForm() {
 
   const submit = async () => {
     await api.auth.register(email, password);
-    const router = useRouter();
     router.push('/login');
   };
 
