@@ -46,8 +46,12 @@ export default function InvitePeople({
       sx={{
         display: 'flex',
         flexDirection: 'column',
+        alignItems: 'center',
       }}
     >
+      <Typography variant="h6" sx={{ mb: 3 }}>
+        Convide pessoas para sua viagem
+      </Typography>
       <Box sx={{ textAlign: 'center' }}>
         <TextField
           error={!isEmailValid(email)}
@@ -59,7 +63,7 @@ export default function InvitePeople({
               <InputAdornment position="end">
                 <Box
                   onClick={() => {
-                    addEmail;
+                    addEmail();
                   }}
                   sx={{
                     backgroundColor: 'light-blue',
@@ -82,6 +86,7 @@ export default function InvitePeople({
           onChange={(e) => setEmail(e.target.value)}
         />
       </Box>
+
       <Box sx={{ display: 'flex', flexDirection: 'row', mb: 4, justifyContent: 'end' }}>
         <TransitionGroup>
           {emaiĺList.map((email) => (
@@ -110,7 +115,12 @@ export default function InvitePeople({
           ))}
         </TransitionGroup>
       </Box>
-      <Button variant="contained" onClick={() => handleFormSubmit()}>
+
+      <Button
+        sx={{ width: '60%' }}
+        variant="contained"
+        onClick={() => handleFormSubmit()}
+      >
         Criar Viagem
       </Button>
     </Box>
