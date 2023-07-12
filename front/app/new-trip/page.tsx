@@ -8,22 +8,18 @@ import { KeyboardArrowLeft, KeyboardArrowRight } from '@mui/icons-material';
 import { Box, MobileStepper, Button } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { Dayjs } from 'dayjs';
-import { useSearchParams } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import NavBar from '@/app/components/app/navbar';
 
-export enum Layouts {
-  OneStop = 'oneStop',
-  International = 'international',
-}
 export interface formInterface {
   initialDate?: Dayjs;
   endDate?: Dayjs;
   duration?: number;
   destination: '';
-  layout: Layouts;
   editors: string[];
 }
 export default function NewTrip() {
+  const router = useRouter();
   const searchParams = useSearchParams();
   const [activeStep, setActiveStep] = useState(0);
   const [formData, setFormData] = useState<formInterface>({
@@ -31,7 +27,6 @@ export default function NewTrip() {
     endDate: undefined,
     duration: undefined,
     destination: '',
-    layout: Layouts.OneStop,
     editors: [],
   });
 
@@ -56,7 +51,8 @@ export default function NewTrip() {
   };
 
   const submitForm = async () => {
-    await api.trip.createTrip(formData);
+    const trip = await api.trip.createTrip(formData);
+    router.push(`/trips/${trip.id}`);
   };
   return (
     <Box
