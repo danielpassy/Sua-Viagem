@@ -1,7 +1,7 @@
 import { Dayjs } from 'dayjs';
 import mongoose from 'mongoose';
 import plugin from 'dayjs/plugin/duration';
-import { Trip } from '@/types';
+import { Trip, userIdType } from '@/types';
 
 export enum Layouts {
   OneStop = 'oneStop',
@@ -23,6 +23,18 @@ export class UpdateTripDto {
   public constructor(init: Partial<UpdateTripDto>) {
     Object.assign(this, init);
   }
+  initialDate?: Dayjs;
+  destination?: string;
+  data?: object;
+  name?: string;
+  editors?: userIdType[];
+}
+
+export class ListTripDto {
+  public constructor(init: Partial<ListTripDto>) {
+    Object.assign(this, init);
+  }
+  _id: userIdType;
   initialDate?: Dayjs;
   destination?: string;
   data?: object;

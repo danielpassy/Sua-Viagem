@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { CreateTripDto, UpdateTripDto } from '@/features/trips/controllers/trips/trips.dto';
+import { CreateTripDto, ListTripDto, UpdateTripDto } from '@/features/trips/controllers/trips/trips.dto';
 import tripService from '@/features/trips/services';
 
 export const createTrip = async (req: Request<{}, {}, CreateTripDto>, res: Response) => {
@@ -29,9 +29,9 @@ export const deleteTrip = async (req: Request<{ tripId: string }, {}, {}>, res: 
   }
 };
 
-export const listTrips = async (req: Request, res: Response) => {
+export const listTrips = async (req: Request<{}, {}, ListTripDto>, res: Response) => {
   try {
-    const trips = await tripService.list(req.user as string);
+    const trips = await tripService.list(req.user as string, req.body);
     return res.status(200).json({ trips });
   } catch (error: any) {
     return res.status(401).json({ message: error.message });
