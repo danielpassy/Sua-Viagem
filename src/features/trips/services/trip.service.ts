@@ -1,10 +1,11 @@
 import communicationService from '@/features/communications/services';
 import { TripRepository } from '@/features/models';
-import { TripDocument } from '@/features/models/trip.model';
+import TripModel, { TripDocument } from '@/features/models/trip.model';
 import { CreateTripDto, UpdateTripDto } from '@/features/trips/controllers/trips/trips.dto';
 import { TripServiceInterface } from '@/features/trips/services/trip.service.interface';
 import userService from '@/features/user/services';
 import { userIdType } from '@/types';
+import { Query, QueryWithHelpers } from 'mongoose';
 
 export class TripService implements TripServiceInterface {
   public constructor(private _repository: TripRepository) {}
@@ -33,8 +34,8 @@ export class TripService implements TripServiceInterface {
   delete(tripId: any, userId: string): Promise<void> {
     throw new Error('Method not implemented.');
   }
-  list(userId: string): Promise<void> {
-    throw new Error('Method not implemented.');
+  async list(userId: string): Promise<TripDocument[]> {
+    return await this._repository.find({ owner: userId });
   }
 }
 

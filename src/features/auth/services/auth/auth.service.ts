@@ -3,6 +3,7 @@ import { LoginDTO, RegisterDTO } from '@/features/auth/controllers/auth/auth.dto
 import { AuthServiceInterface } from '@/features/auth/services/auth/auth.service.interface';
 import { UserRepository, UserDocument } from '@/features/models';
 import { EncryptService } from '@/libs/encryption';
+import { userIdType } from '@/types';
 import jwt from 'jsonwebtoken';
 
 export class AuthService implements AuthServiceInterface {
@@ -19,7 +20,7 @@ export class AuthService implements AuthServiceInterface {
       throw Error('Incorrect password');
     }
 
-    return jwt.sign({ _id: user._id }, config.JWT_KEY, { expiresIn: `${60 * 60 * 24 * 7}` });
+    return jwt.sign({ _id: user._id } as IJwtPayload, config.JWT_KEY, { expiresIn: `${60 * 60 * 24 * 7}` });
   }
 
   async logout(): Promise<void> {
@@ -41,5 +42,7 @@ export class AuthService implements AuthServiceInterface {
     return registeredUser;
   }
 }
-
+export interface IJwtPayload {
+  _id: userIdType;
+}
 export default AuthService;

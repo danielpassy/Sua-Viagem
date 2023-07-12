@@ -1,5 +1,7 @@
 import { Dayjs } from 'dayjs';
 import mongoose from 'mongoose';
+import plugin from 'dayjs/plugin/duration';
+import { Trip } from '@/types';
 
 export enum Layouts {
   OneStop = 'oneStop',
@@ -12,7 +14,7 @@ export class CreateTripDto {
   initialDate?: Dayjs;
   duration?: plugin.Duration;
   destination: string;
-  data: Layouts;
+  data?: Trip; // TODO: is this mandatory?
   name: string;
   editorsEmail: string[];
 }

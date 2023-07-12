@@ -7,7 +7,11 @@ import UserModel from '@/features/models/user.model';
 import db from '@/libs/db';
 
 beforeAll(async () => {
-  await db.connect(`${globalThis.__MONGO_URI__}${globalThis.__MONGO_DB_NAME__}`);
+  await db.connect(`${globalThis.__MONGO_URI__}${globalThis.__MONGO_DB_NAME__} `);
+});
+
+afterAll(async () => {
+  await db.disconnect();
 });
 
 beforeEach(async () => {
@@ -16,10 +20,6 @@ beforeEach(async () => {
   for (collection of collections) {
     await collection.drop();
   }
-});
-
-afterAll(async () => {
-  await db.disconnect();
 });
 
 it('it should create and retrieve a user', async () => {

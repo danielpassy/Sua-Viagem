@@ -18,7 +18,7 @@ export abstract class MongoBaseRepository<T extends Document, I> {
     return await this._mongoModel.findOne({ [field]: value }).exec();
   }
 
-  async find(query: any): Promise<T[] | null> {
+  async find(query: any): Promise<T[]> {
     return await this._mongoModel.find(query).exec();
   }
 
