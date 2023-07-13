@@ -8,5 +8,6 @@ export default {
     httpClient.post(`/trips/${trip.id}`, trip).then((response) => response.data),
   deleteTrip: (trip: any) =>
     httpClient.delete(`/trips/${trip.id}`).then((response) => response.data),
-  getTrips: () => httpClient.get('/trips').then((response) => response.data),
+  getTrips: (filters: { _id: any }) =>
+    httpClient.get('/trips', { params: filters }).then((response) => response.data),
 };
