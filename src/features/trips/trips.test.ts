@@ -79,3 +79,19 @@ it('return user trips', async () => {
   expect(response.body.trips.length).toBe(1);
   expect(response.body.trips[0]._id).toBe(String(trip._id));
 });
+
+it('return specific travel', async () => {
+  const user = await fixtures.createUser();
+  const token = await fixtures.getJwt(user);
+  const trip = await fixtures.createTrip(user._id);
+  const _secondTrip = await fixtures.createTrip(user._id);
+
+  const response = await request(app)
+    .get('/api/trips')
+    .set('Cookie', [`token=${token}`])
+    .query({ _id: String(trip._id) });
+
+  expect(response.status).toBe(200);
+  expect(response.body.trips.length).toBe(1);
+  expect(response.body.trips[0]._id).toBe(String(trip._id));
+});
